@@ -1,8 +1,5 @@
--- The config block instructs dbt to create a table in the database based on this statement
-{{ config(
-  materialized='table',
-  file_format='delta'
-) }}
+-- Refer to macro in macros folder
+{{ materialization_config() }}
 
 WITH source
 AS (
@@ -24,16 +21,14 @@ AS (
 		-- dimensions
 		player_name
 		,DATE AS appearance_date
-		,
 		-- facts
-		yellow_cards
+		,yellow_cards
 		,red_cards
 		,goals
 		,assists
 		,minutes_played
-		,
 		-- metadata
-		loaded_timestamp
+		,loaded_timestamp
 		,source_file
 	FROM source
 	)
