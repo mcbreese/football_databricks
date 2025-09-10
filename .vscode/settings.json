@@ -1,3 +1,17 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "jupyter.interactiveWindow.cellMarker.codeRegex": "^# COMMAND ----------|^# Databricks notebook source|^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])",
+    "jupyter.interactiveWindow.cellMarker.default": "# COMMAND ----------",
+    "sqltools.connections": [
+        {
+            "connectionMethod": "Hostname and Token",
+            "catalog": "learning_catalog",
+            "previewLimit": 50,
+            "driver": "Databricks",
+            "name": "tb_databricks2",
+            "host": "dbc-746257c7-0bc4.cloud.databricks.com",
+            "path": "/sql/1.0/warehouses/4e4510bface3e65c",
+            "schema": "football_raw"
+        }
+    ]
 }
