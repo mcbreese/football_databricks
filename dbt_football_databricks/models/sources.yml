@@ -6,3 +6,8 @@ sources:
     schema: football_raw # The schema where the diamonds table is
     tables:
       - name: raw_appearances # The name of the table itself
+      - name: raw_clubs
+      - name: raw_players
+      - name: raw_player_valuations
+      - name: raw_competitions
+      - name: raw_games
