@@ -10,9 +10,9 @@ AS (
 	SELECT
 		-- primary key
 		-- we are using a combination of columns to make a unique key, this is a great way to handle source tables without a natural primary key
-		{{ dbt_utils.generate_surrogate_key(['appearance_id', 'game_id', 'player_id']) }} as appearance_id,
+		{{ dbt_utils.generate_surrogate_key(['appearance_id', 'game_id', 'player_id']) }} as appearance_player_sk,
 		-- foreign keys
-		appearance_id AS appearance_source_id
+		appearance_id
 		,game_id
 		,player_id
 		,player_club_id

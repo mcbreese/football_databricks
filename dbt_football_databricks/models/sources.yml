@@ -2,6 +2,7 @@
 version: 2
 sources:
   - name: football_raw # A name to reference the source
+    description: "The raw, untransformed football data."
     catalog: learning_catalog
     schema: football_raw # The schema where the diamonds table is
     tables:
@@ -11,3 +12,16 @@ sources:
       - name: raw_player_valuations
       - name: raw_competitions
       - name: raw_games
+      - name: raw_transfers
+  - name: football_stg
+    description: "Cleaned and standardised data from the dbt staging layer."
+    catalog: learning_catalog
+    schema: football_stg
+    tables:
+      - name: stg_appearances
+      - name: stg_clubs
+      - name: stg_players
+      - name: stg_player_valuations
+      - name: stg_competitions
+      - name: stg_games
+      - name: stg_transfers

@@ -1,0 +1,34 @@
+-- Refer to macro in macros folder
+{{ materialization_config() }}
+
+with source as (
+
+    select * from {{ source('football_raw', 'raw_transfers') }}
+
+),
+
+players as (
+
+    select
+        -- primary key
+        {{ dbt_utils.generate_surrogate_key(['player_id']) }} as player_sk, -- create surrogate key
+        player_id,
+        -- foreign key
+        from_club_id,
+        to_club_id,
+        -- dimensions
+        CAST(transfer_date AS DATE) AS transfer_date,
+        transfer_season,
+        -- facts
+        transfer_fee,
+        market_value_in_eur,
+        -- metadata
+        loaded_timestamp,
+        source_file
+
+    from source
+
+)
+
+select * 
+from players

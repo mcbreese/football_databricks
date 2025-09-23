@@ -1,7 +1,7 @@
 WITH player_appearances AS (
-    SELECT
+    SELECT ap.appearance_player_sk,
         pl.player_name,
-        cl.name AS club_name,
+        COALESCE(cl.name, 'Unknown')  AS club_name,
         pl.date_of_birth,
         ap.appearance_date,
         -- facts
@@ -32,20 +32,21 @@ WITH player_appearances AS (
         ap.appearance_id,
         gm.home_club_id,
         gm.away_club_id
-    FROM `learning_catalog`.`football_stg`.`stg_players` AS pl
-    LEFT JOIN `learning_catalog`.`football_stg`.`stg_appearances` AS ap
+	-- Ref downstream models for best practice build in sequence
+    FROM {{ ref('stg_players') }} AS pl
+    LEFT JOIN {{ ref('stg_appearances') }} AS ap
         ON pl.player_id = ap.player_id
-    LEFT JOIN `learning_catalog`.`football_stg`.`stg_clubs` AS cl
+    LEFT JOIN {{ ref('stg_clubs') }} AS cl
         ON ap.player_club_id = cl.club_id
-    LEFT JOIN `learning_catalog`.`football_stg`.`stg_competitions` AS co
+    LEFT JOIN {{ ref('stg_competitions') }} AS co
         ON ap.competition_id = co.competition_id
-    LEFT JOIN `learning_catalog`.`football_stg`.`stg_games` AS gm
+    LEFT JOIN {{ ref('stg_games') }} AS gm
         ON ap.game_id = gm.game_id
 )
 
 SELECT
     -- primary key
-    md5(cast(concat(coalesce(cast(player_id as string), '_dbt_utils_surrogate_key_null_'), '-', coalesce(cast(appearance_id as string), '_dbt_utils_surrogate_key_null_')) as string)) AS player_appearance_sk,
+    {{ dbt_utils.generate_surrogate_key(['player_id', 'appearance_id']) }} AS player_appearance_sk,
     player_name,
     club_name,
     date_of_birth,
@@ -76,4 +77,3 @@ SELECT
     home_club_id,
     away_club_id
 FROM player_appearances
-LIMIT 10;
