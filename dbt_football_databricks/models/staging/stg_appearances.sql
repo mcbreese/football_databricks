@@ -15,7 +15,7 @@ AS (
 		appearance_id
 		,game_id
 		,player_id
-		,player_club_id
+		,ISNULL(player_club_id,0) AS player_club_id
 		,competition_id
 		,
 		-- dimensions

@@ -36,12 +36,12 @@ models:
 
     staging:
       +schema: stg
-      +materialized: view
+      +materialized: view # stg best practice is view
 
     intermediate:
       +schema: int
-      +materialized: table
+      +materialized: view # stg best practice is view
 
     gold:
       +schema: gold
-      +materialized: table
+      +materialized: table # mart/gold best practice is tbl

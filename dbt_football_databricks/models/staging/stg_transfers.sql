@@ -11,7 +11,7 @@ players as (
 
     select
         -- primary key
-        {{ dbt_utils.generate_surrogate_key(['player_id']) }} as player_sk, -- create surrogate key
+        {{ dbt_utils.generate_surrogate_key(['player_id','transfer_date']) }} as player_transfer_sk, -- create surrogate key
         player_id,
         -- foreign key
         from_club_id,

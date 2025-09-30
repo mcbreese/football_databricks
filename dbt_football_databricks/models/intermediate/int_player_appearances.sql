@@ -27,11 +27,13 @@ WITH player_appearances AS (
         co.type AS competition_type,
         -- foreign keys
         pl.player_id,
-        cl.club_id,
+        cl.club_id AS club_id,
         gm.game_id,
         ap.appearance_id,
         gm.home_club_id,
-        gm.away_club_id
+        gm.away_club_id,
+        -- metdata
+        ap.loaded_timestamp AS appearance_loaded_timestamp
 	-- Ref downstream models for best practice build in sequence
     FROM {{ ref('stg_players') }} AS pl
     LEFT JOIN {{ ref('stg_appearances') }} AS ap
@@ -75,5 +77,7 @@ SELECT
     game_id,
     appearance_id,
     home_club_id,
-    away_club_id
+    away_club_id,
+    -- metdata
+    appearance_loaded_timestamp
 FROM player_appearances
