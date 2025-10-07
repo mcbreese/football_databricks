@@ -32,3 +32,6 @@ sources:
     tables:
       - name: int_player_appearances
       - name: int_player_transfers
+      - name: int_clubs     
+      - name: int_players
+      - name: int_competitions
