@@ -18,6 +18,7 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
+target-path: "target" # directory which will store compiled SQL and documentation files
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
@@ -33,15 +34,31 @@ flags:
 # files using the `{{ config(...) }}` macro.
 models:
   dbt_football_databricks:
-
+    +persist_docs: # Configuration for pushing dbt documentation to the database
+      relation: true # Push the model's description (relation) as a comment on the table/view
+      columns: true # Push column descriptions as comments on the respective columns
+    #contracts: # Configuration block for Data Contracts (enforcing structure)
+       #enabled: true # Enable data contract enforcement for these models
+    
     staging:
-      +schema: stg
+      +enabled: true
+      +tags: ["bronze", "staging"] # all staging should be tagged with minimum ["bronze", "staging"]
       +materialized: view # stg best practice is view
+      +schema: stg
+      +docs:
+        node_color: "#CD7F32" # bronze color
 
     intermediate:
-      +schema: int
+      +tags: ["silver", "intermediate"] # all intermediate should be tagged with minimum ["bronze", "intermediate"]
       +materialized: view # stg best practice is view
+      +schema: int
+      +docs:
+        node_color: "#A0A0A0" # silver color
+
 
     gold:
-      +schema: gold
+      +tags: ["gold", "marts"] # all marts should be tagged with minimum ["silver", "marts"]
       +materialized: table # mart/gold best practice is tbl
+      +schema: gold
+      +docs:
+        node_color: "#FFD700" # gold color
