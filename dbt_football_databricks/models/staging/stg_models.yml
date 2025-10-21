@@ -1,0 +1,73 @@
+version: 2
+
+models:
+  # -----------------------------------------------------------
+  # 1. stg_players (Anchor Definitions Placed Here)
+  # -----------------------------------------------------------
+  - name: stg_players
+    # Define the Metadata Anchor here (no need for a merge key)
+    <<: &stg_meta_anchor
+      meta:
+        owner: "Data Engineering"
+      config:
+        contract:
+          enforced: true
+    description: "Cleansed and standardized player master data."
+    columns:
+      - name: player_sk
+        description: "Surrogate Primary Key (PK)."
+        data_type: STRING
+        # Define the PK Anchor on this tests block
+        tests: &pk_tests_anchor 
+          - not_null
+          - unique
+      
+      - name: player_id
+        description: "Natural Key (NK)."
+      - name: date_of_birth
+        description: "Player's birth date, cast to DATE type."
+        tests:
+          - not_null
+
+  # -----------------------------------------------------------
+  # 2. stg_clubs (Referencing the Anchors)
+  # -----------------------------------------------------------
+  - name: stg_clubs
+    <<: *stg_meta_anchor # Reference the Metadata Anchor
+    description: "Cleansed and standardized club master data."
+    columns:
+      - name: club_sk
+        description: "Surrogate Primary Key (PK)."
+        data_type: STRING
+        tests: *pk_tests_anchor # Reference the PK Anchor
+      - name: club_id
+        description: "Natural Key (NK)."
+
+  # -----------------------------------------------------------
+  # 3. stg_appearances (Referencing the Anchors)
+  # -----------------------------------------------------------
+  - name: stg_appearances
+    <<: *stg_meta_anchor
+    description: "Appearance events, ready for enrichment."
+    columns:
+      - name: appearance_sk
+        description: "Surrogate Primary Key (PK)."
+        data_type: STRING
+        tests: *pk_tests_anchor
+      - name: player_id
+        description: "Foreign Key to player."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_players')
+              field: player_id
+      - name: game_id
+        description: "Foreign Key to game."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_games')
+              field: game_id
+              
+# ... continue applying the same pattern for stg_games and stg_transfers
+# ... by using <<: *stg_meta_anchor and tests: *pk_tests_anchor

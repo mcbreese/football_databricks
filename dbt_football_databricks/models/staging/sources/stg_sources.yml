@@ -1,0 +1,73 @@
+version: 2
+
+sources:
+  - name: football_raw # The single logical source name for all raw data
+    tags: ["raw", "source"] # Tags for easy selection/exclusion
+    description: "The raw, untransformed football data ingested into Databricks."
+    catalog: learning_catalog
+    schema: football_raw # The schema where the raw tables reside
+    
+    tables:
+      # --- High-Volume Event Data (Check Freshness Frequently) ---
+      - name: raw_appearances
+        description: "One record per player appearance in a game."
+        freshness:
+          warn_after: {count: 28, period: day} # Warn if data is older than 6 hours
+          #error_after: {count: 12, period: hour}
+        columns:
+          - name: appearance_id # Assuming this is the natural PK
+            tests:
+              - not_null
+              - unique
+              
+      - name: raw_games
+        description: "One record per match played."
+        freshness:
+          warn_after: {count: 28, period: day} # Warn if data is older than 6 hours
+        columns:
+          - name: game_id
+            tests:
+              - not_null
+              - unique
+
+      # --- Master/Dimension Data (Check Freshness Less Frequently) ---
+      - name: raw_players
+        description: "Master list of player biographical data."
+        freshness:
+          warn_after: {count: 28, period: day} # Warn if data is older than 6 hours
+        columns:
+          - name: player_id # Assuming this is the natural PK
+            tests:
+              - not_null
+              - unique
+
+      - name: raw_clubs
+        description: "Master list of club data."
+        columns:
+          - name: club_id
+            tests:
+              - not_null
+              - unique
+
+      - name: raw_competitions
+        description: "Master list of leagues and cups."
+        columns:
+          - name: competition_id
+            tests:
+              - not_null
+              - unique
+
+      # --- Transactional/Valuation Data ---
+      - name: raw_transfers
+        description: "Records of player transfers between clubs."
+        columns: # there is no PK in raw data
+          - name: player_id # Test FK integrity at the source
+            tests:
+              - not_null
+              
+      - name: raw_player_valuations
+        description: "Historical market value data for players."
+        columns:
+          - name: player_id 
+            tests:
+              - not_null

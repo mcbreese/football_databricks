@@ -1,0 +1,13 @@
+# models/gold/fct_sources.yml
+version: 2
+sources:    
+  - name: football_int
+    description: "Joined data from the dbt staging layer."
+    catalog: learning_catalog
+    schema: football_int
+    tables:
+      - name: int_player_appearances
+      - name: int_player_transfers
+      - name: int_clubs     
+      - name: int_players
+      - name: int_competitions
