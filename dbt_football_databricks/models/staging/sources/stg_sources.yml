@@ -8,14 +8,13 @@ sources:
     schema: football_raw # The schema where the raw tables reside
     
     tables:
-      # --- High-Volume Event Data (Check Freshness Frequently) ---
       - name: raw_appearances
         description: "One record per player appearance in a game."
         freshness:
           warn_after: {count: 28, period: day} # Warn if data is older than 6 hours
           #error_after: {count: 12, period: hour}
         columns:
-          - name: appearance_id # Assuming this is the natural PK
+          - name: appearance_id # pk
             tests:
               - not_null
               - unique
@@ -36,7 +35,7 @@ sources:
         freshness:
           warn_after: {count: 28, period: day} # Warn if data is older than 6 hours
         columns:
-          - name: player_id # Assuming this is the natural PK
+          - name: player_id # pk
             tests:
               - not_null
               - unique

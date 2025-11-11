@@ -1,0 +1,26 @@
+version: 2
+
+exposures:
+  # -----------------------------------------------------------
+  # EXPOSURE 1: Player Analysis Dashboard (Databricks Report)
+  # -----------------------------------------------------------
+  - name: player_analysis_dashboard
+    label: Player Career & Performance Dashboard
+    type: dashboard
+    maturity: high
+    # Define the tool used to consume the data
+    url: 'https://google.co.uk' # example will change 
+    description: |
+      This Databricks SQL Dashboard provides key metrics and visualizations for scouting and tactical analysis. 
+      It allows analysts to compare player performance (Goals, Assists, Minutes) across different seasons and competitions, 
+      and trace the financial impact of their transfer history.
+
+    owner:
+      # Use an internal team or specific person
+      name: Data & Analytics Team
+      email: example@gmail.com
+
+    # Define the upstream models this report relies on
+    depends_on:
+      - ref('fct_player_performance_per_season_competition')
+      - ref('fct_player_transfers')
