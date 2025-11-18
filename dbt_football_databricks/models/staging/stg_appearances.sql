@@ -1,11 +1,25 @@
--- Refer to macro in macros folder
-{{ materialization_config() }}
-
 WITH source
 AS (
 	select * from {{ source('football_raw', 'raw_appearances') }}
-	)
-	,appearances
+	),
+
+-- Got a lot of missing clubs in my fct data - use an exists as skipping dq issue for personal project
+clubs AS (
+
+    SELECT *
+    FROM {{source('football_raw', 'raw_clubs')}}
+
+),
+
+players AS (
+
+	SELECT  *
+    FROM {{source('football_raw', 'raw_players')}}
+
+),
+
+
+appearances
 AS (
 	SELECT
 		-- primary key
@@ -15,7 +29,7 @@ AS (
 		appearance_id
 		,game_id
 		,player_id
-		,ISNULL(player_club_id,0) AS player_club_id
+		,IFNULL(player_club_id,0) AS player_club_id
 		,competition_id
 		,
 		-- dimensions
@@ -30,7 +44,9 @@ AS (
 		-- metadata
 		,loaded_timestamp
 		,source_file
-	FROM source
+	FROM source ap
+	    WHERE EXISTS (SELECT * FROM clubs AS cl WHERE cl.club_id = IFNULL(ap.player_club_id,0))
+		AND EXISTS (SELECT * FROM players pl WHERE ap.player_id = pl.player_id)
 	)
 SELECT *
 FROM appearances

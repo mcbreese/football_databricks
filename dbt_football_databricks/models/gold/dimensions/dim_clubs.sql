@@ -1,6 +1,5 @@
-{{ config(
-    materialized='table'
-) }}
+-- Refer to macro in macros folder
+{{ materialization_config() }}
 
 
 SELECT club_id

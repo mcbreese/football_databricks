@@ -31,7 +31,7 @@ WITH player_appearances AS (
         co.type AS competition_type,
         -- foreign keys
         pl.player_id,
-        pl.player_club_id AS club_id,
+        pl.current_club_id AS club_id,
         gm.game_id,
         ap.appearance_id,
         gm.home_club_id,

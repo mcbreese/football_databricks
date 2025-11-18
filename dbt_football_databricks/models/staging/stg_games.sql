@@ -1,10 +1,14 @@
--- Refer to macro in macros folder
-{{ materialization_config() }}
-
-
 with source as (
 
     select * from {{ source('football_raw', 'raw_games') }}
+
+),
+
+-- Got a lot of missing clubs in my fct data - use an exists as skipping dq issue for personal project
+clubs AS (
+
+    SELECT *
+    FROM {{source('football_raw', 'raw_clubs')}}
 
 ),
 
@@ -32,7 +36,11 @@ games as (
         loaded_timestamp,
         source_file
 
-    from source
+    from source gm
+    WHERE EXISTS (SELECT * FROM clubs AS cl
+            WHERE cl.club_id = gm.home_club_id)
+    AND EXISTS (SELECT * FROM clubs AS cl
+            WHERE cl.club_id = gm.away_club_id)
 
 )
 

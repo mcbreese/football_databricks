@@ -68,41 +68,41 @@ Event data capturing player transfers between clubs, including the transfer date
 {% enddocs %}
 
 {% docs player_id %}
-**Natural Key (NK) / Foreign Key (FK).** The unique player identifier sourced directly from the raw system. Links to the `stg_players` dimension table.
+**Natural Key (NK) / Foreign Key (FK).** The unique player identifier sourced directly from the raw system.
 {% enddocs %}
 
 {% docs club_id %} **Natural Key (NK) / Foreign Key (FK).** The unique club identifier sourced directly from the raw system. {% enddocs %}
 
 {% docs game_id %}
-**Natural Key (NK) / Foreign Key (FK).** The unique game identifier. Links to the `stg_games` facts table.
+**Natural Key (NK) / Foreign Key (FK).** The unique game identifier.
 {% enddocs %}
 
 {% docs competition_id %}
-**Natural Key (NK) / Foreign Key (FK).** The unique competition identifier. Links to the `stg_competitions` dimension table.
+**Natural Key (NK) / Foreign Key (FK).** The unique competition identifier.
 {% enddocs %}
 
 {% docs current_club_id %}
-**Foreign Key (FK).** The natural key of the club the player was registered with at the time of the valuation or the current club. Links to `stg_clubs.club_id`.
+**Foreign Key (FK).** The natural key of the club the player was registered with at the time of the valuation or the current club.
 {% enddocs %}
 
 {% docs home_club_id %}
-**Foreign Key (FK).** The natural key of the club that hosted the game. Links to `stg_clubs.club_id`.
+**Foreign Key (FK).** The natural key of the club that hosted the game.
 {% enddocs %}
 
 {% docs away_club_id %}
-**Foreign Key (FK).** The natural key of the club that played the game away from home. Links to `stg_clubs.club_id`.
+**Foreign Key (FK).** The natural key of the club that played the game away from home.
 {% enddocs %}
 
 {% docs from_club_id %}
-**Foreign Key (FK).** The natural key of the club the player was transferred *from*. Links to `stg_clubs.club_id`.
+**Foreign Key (FK).** The natural key of the club the player was transferred *from*.
 {% enddocs %}
 
 {% docs to_club_id %}
-**Foreign Key (FK).** The natural key of the club the player was transferred *to*. Links to `stg_clubs.club_id`.
+**Foreign Key (FK).** The natural key of the club the player was transferred *to*.
 {% enddocs %}
 
 {% docs player_club_id %}
-**Foreign Key (FK).** The natural key of the club the player played for during this specific appearance. Links to `stg_clubs.club_id`.
+**Foreign Key (FK).** The natural key of the club the player played for during this specific appearance.
 {% enddocs %}
 
 {% docs appearance_id %}
@@ -274,7 +274,7 @@ The specific transfer window/season (e.g., 'summer 2023') when the transfer occu
 {% enddocs %}
 
 {% docs transfer_fee %}
-The official fee paid for the transfer, standardized in Euros (€).
+The official fee paid for the transfer, standardised in Euros (€).
 {% enddocs %}
 
 {% docs valuation_date %}

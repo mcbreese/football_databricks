@@ -1,3 +1,5 @@
+-- Refer to macro in macros folder
+{{ materialization_config() }}
 -- Set your date range here (e.g., from Jan 1, 2000, to Dec 31, 2030)
 WITH date_range AS (
     SELECT

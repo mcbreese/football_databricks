@@ -1,6 +1,3 @@
--- Refer to macro in macros folder
-{{ materialization_config() }}
-
 with source as (
 
     select * from {{ source('football_raw', 'raw_players') }}

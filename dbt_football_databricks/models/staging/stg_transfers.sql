@@ -1,6 +1,3 @@
--- Refer to macro in macros folder
-{{ materialization_config() }}
-
 with source as (
 
     select * from {{ source('football_raw', 'raw_transfers') }}
@@ -11,7 +8,7 @@ players as (
 
     select
         -- primary key
-        {{ dbt_utils.generate_surrogate_key(['player_id','transfer_date']) }} as player_transfer_sk, -- create surrogate key
+        {{ dbt_utils.generate_surrogate_key(['player_id','transfer_date','to_club_id']) }} as player_transfer_sk, -- create surrogate key
         player_id,
         -- foreign key
         from_club_id,

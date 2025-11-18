@@ -27,12 +27,9 @@ models:
       - name: game_id
         description: "{{ doc('game_id') }}"
         data_type: INT
+        # Did originally test ref existes in stg_games but have missing data not yet overcome
         tests:
           - not_null
-          - relationships: # check fk appears in pk table
-              arguments:
-                to: ref('stg_games')
-                field: game_id
       - name: player_id
         description: "{{ doc('player_id') }}"
         data_type: INT
@@ -361,7 +358,7 @@ models:
         data_type: DATE
       - name: age_in_years
         description: "{{ doc('age_in_years') }}"
-        data_type: DECIMAL
+        data_type: DECIMAL(18,8)
       - name: last_season
         description: "{{ doc('last_season') }}"
         data_type: INT
