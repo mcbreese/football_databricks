@@ -4,10 +4,10 @@ This Markdown file serves as a high-level overview of the Intermediate data laye
 
 ## Purpose of the Intermediate Layer
 
-The **Intermediate (INT) layer** is responsible for cleaning, standardizing, and aggregating data from the Staging (STG) layer before it is moved to the final Gold layer dimensions and facts.
+The **Intermediate (INT) layer** is responsible for cleaning, standardising, and aggregating data from the Staging (STG) layer before it is moved to the final Gold layer dimensions and facts.
 
 Models in this layer perform key tasks such as:
-* Standardizing formats and applying type conversions.
+* Standardising formats and applying type conversions.
 * Generating initial surrogate keys (`SK`).
 * Performing complex lookups and joins (e.g., linking transfers to club history).
 * Creating aggregated summaries that will form the basis of the Gold layer facts.

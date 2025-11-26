@@ -19,7 +19,7 @@ A complete historical record of every player transfer event and the associated f
 ## Column Definitions (Derived Metrics & Aggregates)
 
 {% docs competition_name_fct %}
-The human-readable name of the competition (e.g., "Premier League"), denormalized from the `dim_competitions` table for ease of reporting.
+The human-readable name of the competition (e.g., "Premier League"), denormalised from the `dim_competitions` table for ease of reporting.
 {% enddocs %}
 
 {% docs total_appearances %}

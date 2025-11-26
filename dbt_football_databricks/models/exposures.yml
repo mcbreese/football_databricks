@@ -11,7 +11,7 @@ exposures:
     # Define the tool used to consume the data
     url: 'https://google.co.uk' # example will change 
     description: |
-      This Databricks SQL Dashboard provides key metrics and visualizations for scouting and tactical analysis. 
+      This Databricks SQL Dashboard provides key metrics and visualisations for scouting and tactical analysis. 
       It allows analysts to compare player performance (Goals, Assists, Minutes) across different seasons and competitions, 
       and trace the financial impact of their transfer history.
 

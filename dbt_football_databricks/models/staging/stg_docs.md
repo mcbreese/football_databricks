@@ -8,15 +8,15 @@ This file contains documentation blocks for all models and columns in the Stagin
 
 
 {% docs stg_appearances_model_description %}
-The core facts table capturing a player's participation in a specific game. Data is cleansed, standardized, and links to the `stg_players` and `stg_games` dimension/fact tables.
+The core facts table capturing a player's participation in a specific game. Data is cleansed, standardised, and links to the `stg_players` and `stg_games` dimension/fact tables.
 {% enddocs %}
 
 {% docs stg_clubs_model_description %}
-Standardized master data for all football clubs. Includes club statistics, stadium details, and current value information.
+Standardised master data for all football clubs. Includes club statistics, stadium details, and current value information.
 {% enddocs %}
 
 {% docs stg_competitions_model_description %}
-Master data for all football competitions (leagues, cups, etc.). Provides standardization for competition names, country, and type.
+Master data for all football competitions (leagues, cups, etc.). Provides standardisation for competition names, country, and type.
 {% enddocs %}
 
 {% docs stg_games_model_description %}
@@ -28,7 +28,7 @@ Historical snapshot data capturing a player's estimated market value in Euros on
 {% enddocs %}
 
 {% docs stg_players_model_description %}
-The core dimension table containing master data for all players. Data is standardized for names, physical attributes, and career details.
+The core dimension table containing master data for all players. Data is standardised for names, physical attributes, and career details.
 {% enddocs %}
 
 {% docs stg_transfers_model_description %}
@@ -138,7 +138,7 @@ The player's height measured in centimeters.
 {% enddocs %}
 
 {% docs date_of_birth %}
-The player's date of birth, standardized as a DATE type.
+The player's date of birth, standardised as a DATE type.
 {% enddocs %}
 
 {% docs age_in_years %}
@@ -206,7 +206,7 @@ The identifier for the country associated with the competition.
 {% enddocs %}
 
 {% docs domestic_league_code %}
-The standardized three or four-letter code for the domestic league.
+The standardised three or four-letter code for the domestic league.
 {% enddocs %}
 
 {% docs type %}
@@ -262,7 +262,7 @@ The total minutes the player was on the field during the appearance.
 {% enddocs %}
 
 {% docs market_value_in_eur %}
-The player's market value, standardized and converted into Euros (€).
+The player's market value, standardised and converted into Euros (€).
 {% enddocs %}
 
 {% docs transfer_date %}
@@ -286,7 +286,7 @@ The date on which the appearance event occurred.
 {% enddocs %}
 
 {% docs game_date %}
-The date on which the game was played, standardized as a DATE type.
+The date on which the game was played, standardised as a DATE type.
 {% enddocs %}
 
 ***

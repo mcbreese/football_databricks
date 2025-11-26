@@ -1,6 +1,6 @@
 
 # Name your project! Project names should contain only lowercase characters
-# and underscores. A good package name should reflect your organization's
+# and underscores. A good package name should reflect your organisation's
 # name or the intended use of these models
 name: 'dbt_football_databricks'
 version: '1.0.0'
