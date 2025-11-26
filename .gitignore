@@ -1,2 +1,4 @@
 
 .databricks
+# Ignore VS Code workspace settings containing secrets
+.vscode/
