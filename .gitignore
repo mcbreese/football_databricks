@@ -3,3 +3,4 @@
 # Ignore VS Code workspace settings containing secrets
 .vscode/
 /.vscode
+.vscode/settings.json
