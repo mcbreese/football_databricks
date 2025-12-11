@@ -78,7 +78,7 @@ def process_file(spark: SparkSession, file_path: str, table_name: str):
             .option("mergeSchema", "true") \
             .saveAsTable(full_table_name)
             
-        print(f"Successfully loaded {df_processed.count()} rows into Bronze table '{full_table_name}' using schema inference.")
+        print(f"Successfully loaded {df_processed.count()} rows into raw table '{full_table_name}' using schema inference.")
 
     except Exception as e:
         print(f"Error processing {table_name} from {file_path}: {e}")
@@ -93,7 +93,7 @@ def main():
     spark = SparkSession.builder.appName("FootballBronzeIngestion") \
         .getOrCreate()
     
-    print("--- Starting Bronze Data Ingestion ---")
+    print("--- Starting raw data ingestion ---")
     
     # 2. Ensure the Target Database Exists
     create_database(spark)
