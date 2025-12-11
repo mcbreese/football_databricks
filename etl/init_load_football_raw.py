@@ -1,5 +1,6 @@
 import sys
 import os
+import glob # Added glob for robust local file listing
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, lit
 # Note: We still import types, but they are not used in this version.
@@ -19,7 +20,7 @@ TARGET_DATABASE = f"{CATALOG_NAME}.{SCHEMA_NAME}"
 # The SCHEMAS dictionary has been removed, and the job is now relying on 
 # 'inferSchema: true'. This is a fast but unsafe practice for production.
 # 
-# ACTION REQUIRED: In the future, please define and reinstate the SCHEMAS dictionary 
+# ACTION REQUIRED: In the future, define and reinstate the SCHEMAS dictionary 
 # and switch 'inferSchema' back to 'false' for reliable type handling.
 # 
 # ----------------------------------------------------------------------------------
@@ -36,20 +37,30 @@ def get_file_list(spark: SparkSession) -> list:
     """
     Lists the CSV files in the base path.
     Uses dbutils if available (in Databricks environment),
-    otherwise uses standard Spark file listing for general Spark environments.
+    otherwise uses standard Python glob for non-Spark environments.
     """
     try:
-        # Check if dbutils is available (Databricks specific)
-        from pyspark.sql import SparkSession
-        dbutils = SparkSession.builder.getOrCreate().dbutils
-        print(f"Listing files in Databricks path: {RAW_FILES_BASE_PATH}")
+        # 1. Attempt to use Databricks' dbutils for listing DBFS paths.
+        # This relies on the environment injecting or making dbutils accessible
+        dbutils = spark.dbutils
+        print(f"Listing files using dbutils in Databricks path: {RAW_FILES_BASE_PATH}")
+        
         # Filter for only CSV files and return the path and name
         return [(f.path, os.path.splitext(f.name)[0]) for f in dbutils.fs.ls(RAW_FILES_BASE_PATH) if f.name.endswith('.csv')]
-    except (ImportError, AttributeError):
-        # Fallback for local testing or non-Databricks Spark
-        print(f"Listing files in local path: {RAW_FILES_BASE_PATH}")
-        # Use Spark to list files, which is safer than os.listdir for distributed filesystems
-        files = spark.sparkContext.wholeTextFiles(f"{RAW_FILES_BASE_PATH}*.csv").keys().collect()
+        
+    except (ImportError, AttributeError, Exception) as e:
+        # 2. Fallback for non-Databricks or Spark Connect environments
+        # This uses Python's standard glob library, which is compatible and avoids 
+        print(f"dbutils call failed or Spark Connect error ({e}). Falling back to local file listing using glob.")
+        
+        # Note: If RAW_FILES_BASE_PATH is a remote DBFS path, this local lookup will fail, 
+        # which is the correct behavior for an external client not properly connected to the cluster.
+        if RAW_FILES_BASE_PATH.startswith('/FileStore'):
+            print("WARNING: The path is DBFS. Ensure you run this job on a Databricks cluster for the job to succeed.")
+            
+        # Use glob to find files in the specified path
+        files = glob.glob(f"{RAW_FILES_BASE_PATH}/*.csv")
+        
         return [(f, os.path.splitext(os.path.basename(f))[0]) for f in files]
 
 
@@ -58,8 +69,6 @@ def process_file(spark: SparkSession, file_path: str, table_name: str):
     Reads a single CSV file, applies schema inference, adds metadata, and writes to a Delta table.
     """
     try:
-        # NOTE: Schema definition check is skipped here due to inferSchema=true
-        
         # 1. Read the CSV file with schema inference enabled
         df = spark.read.format("csv") \
             .option("header", "true") \
@@ -90,10 +99,10 @@ def main():
     
     # 1. Initialize Spark Session
     # Use getOrCreate() for execution on Databricks/Spark clusters
-    spark = SparkSession.builder.appName("FootballBronzeIngestion") \
+    spark = SparkSession.builder.appName("FootballrawIngestion") \
         .getOrCreate()
     
-    print("--- Starting raw data ingestion ---")
+    print("--- Starting raw Data Ingestion ---")
     
     # 2. Ensure the Target Database Exists
     create_database(spark)
