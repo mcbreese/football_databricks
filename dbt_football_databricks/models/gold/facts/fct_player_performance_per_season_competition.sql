@@ -32,7 +32,7 @@ SELECT
     MIN(pl.appearance_loaded_timestamp) AS first_appearance_loaded_timestamp
 
 FROM {{ ref('int_player_appearances') }} AS pl
-
+WHERE pl.season IS NOT NULL -- Ignore dq issues for project if we don't know when appearances were from
 -- Group by all non-aggregated columns
 GROUP BY pl.player_id
     , pl.club_id
