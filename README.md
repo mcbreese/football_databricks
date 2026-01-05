@@ -3,7 +3,7 @@
 
 This is my personal side project focused on building a solid data transformation pipeline using raw football transfer and performance statistics. The goal was to take source files, run them through an ETL process on Databricks, and produce Gold-level fact tables that are actually usable for reporting—stuff like player performance metrics for transfer decision-making (though I haven't actually built the dashboard yet).
 
-**The main reason this project exists was to force myself to learn dbt Core.** Every architectural choice, data contract, and test was done with the intent of **practising** proper dbt principles: modularity, testing, and documentation.
+The main reason this project exists was to force myself to learn dbt Core. Every architectural choice, data contract, and test was done with the intent of practising proper dbt principles: modularity, testing, and documentation.
 
 This section documents my journey building this analytics platform, highlighting technical decisions, encountered challenges, and successful implementations across the PySpark ETL and dbt transformation layers.
 
