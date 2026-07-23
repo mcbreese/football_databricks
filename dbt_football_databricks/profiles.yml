@@ -1,5 +1,5 @@
 dbt_football_databricks:
-  target: dev
+  target: dev # This is a key within a profile that specifies the default target. A target represents a specific environment, like dev or prod. When you run a dbt command, it will use the connection details for this target unless you specify a different one with the -target flag.
   outputs:
     dev:
       type: databricks
