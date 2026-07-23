@@ -31,3 +31,4 @@ This section documents my journey building this analytics platform, highlighting
 | **26/11/2025** | **Custom Data Quality Test** | Created a singular test in the `tests/` directory to explicitly check that `total_appearances`, `total_goals`, and `total_assists` are not below zero in the Gold fact table, ensuring logical data integrity. | 
 | **26/11/2025** | **Security Posture** | Added the `.vscode/` directory to `.gitignore` and used `git rm --cached` to stop tracking, ensuring credentials stored in `settings.json` are never accidentally committed to the repository. |
 | **11/12/2025** | **Refactoring for Production Readiness** | Refactored the initial Jupyter Notebook (`.ipynb`) used for prototyping into a modular, lightweight Python script (`load_raw_sources.py`), the preferred format for automated Databricks Jobs. | 
+| **23/07/2026** | **Development Environment** | Migrating worflow to Snowflake. | 
