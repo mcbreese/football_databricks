@@ -18,11 +18,11 @@ jobs:
         # ENVIRONMENT VARIABLES: Inject your repository secrets securely into this runner session
         # dbt will read these inside your profiles.yml using env_var('DB_HOST'), etc.
         env:
-            DB_HOST: ${{ secrets.DB_HOST }}
-            DB_USER: ${{ secrets.DB_USER }}
-            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-            DB_NAME: ${{ secrets.DB_NAME }}
-            # Add any additional connection secrets here as needed
+            DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+            DATABRICKS_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
+            DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+            DBT_CATALOG: ${{ secrets.DBT_CATALOG }}
+            DBT_SCHEMA: ${{ secrets.DBT_SCHEMA }}
 
         steps:
             # STEP 1: Download a copy of your repository's code onto the Linux virtual machine
