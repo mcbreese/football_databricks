@@ -82,6 +82,7 @@ def process_file(spark: SparkSession, file_path: str, table_name: str):
         # 3. Define the target table name and write the data
         full_table_name = f"{TARGET_DATABASE}.{table_name}"
         
+        # Delta format, enable schema updates, save to metadata store rather than just as a file
         df_processed.write.format("delta") \
             .mode("overwrite") \
             .option("mergeSchema", "true") \
